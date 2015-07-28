@@ -30,9 +30,9 @@ public class DoublonFinder {
 			@Override
 			public FileVisitResult visitFile(Path file,
 					BasicFileAttributes attribs) {
-				System.out.println(String.format(
-						"Visiting file '%s' which has size %d bytes", file,
-						attribs.size()));
+//				System.out.println(String.format(
+//						"Visiting file '%s' which has size %d bytes", file,
+//						attribs.size()));
 				List<String> list = map.get(file.toFile().getName());
 
 				if (list == null) {
