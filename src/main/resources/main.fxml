@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="413.0" prefWidth="608.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ListFileController">
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+                  <MenuItem fx:id="openDirectory" mnemonicParsing="false" onAction="#getDirectoryAndHisDoublons" text="Add Directory" />
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Reset" onAction="#resetDoublons" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <center>
+      <SplitPane fx:id="split" dividerPositions="0.29797979797979796" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <ScrollPane fx:id="scrollLeft" prefHeight="158.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <content>
+                        <VBox fx:id="vbox1" layoutX="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </content>
+                  </ScrollPane>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0">
+               <children>
+                  <ScrollPane fx:id="scrollRight" prefHeight="158.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <content>
+                        <VBox fx:id="vbox2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </content>
+                  </ScrollPane>
+               </children>
+          </AnchorPane>
+        </items>
+      </SplitPane>
+   </center>
+   <bottom>
+      <VBox prefHeight="68.0" prefWidth="608.0" BorderPane.alignment="CENTER">
+         <children>
+            <FlowPane prefHeight="37.0" prefWidth="608.0">
+	           <fx:define>
+			       <ToggleGroup fx:id="searchToggleGroup" />
+			   </fx:define>
+               <children>
+                  <RadioButton fx:id="Contains" mnemonicParsing="false" onAction="#handleSelectedFilter" text="Contains">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="searchToggleGroup" />
+                     </toggleGroup></RadioButton>
+                  <RadioButton fx:id="Starts" mnemonicParsing="false" onAction="#handleSelectedFilter" text="Starts with" toggleGroup="$searchToggleGroup" />
+                  <RadioButton fx:id="Ends" mnemonicParsing="false" onAction="#handleSelectedFilter" text="Ends with" toggleGroup="$searchToggleGroup" />
+               </children>
+            </FlowPane>
+            <TextField fx:id="exprToSearch" onKeyReleased="#handleSelectedFilter" />
+            <Button alignment="BASELINE_RIGHT" contentDisplay="CENTER" layoutX="90.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="41.0" text="Hide" />
+         </children>
+      </VBox>
+   </bottom>
+</BorderPane>

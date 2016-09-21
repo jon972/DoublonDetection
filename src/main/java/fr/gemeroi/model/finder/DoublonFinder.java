@@ -1,4 +1,4 @@
-package model;
+package fr.gemeroi.model.finder;
 
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
@@ -14,30 +14,29 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class DoublonFinder {
+public enum DoublonFinder {
+	
+	INSTANCE;
 
-	private static Map<String, List<String>> searchFiles(String absolutePathRoot){
-		final Map<String, List<String>> map = new HashMap<>();
+	private Map<String, List<String>> mapDoublons = new HashMap<>();
+	Map<String, List<String>> mapFiles = new HashMap<>();
+
+	private void collectFilesName(String absolutePathRoot){
 		FileVisitor<Path> myFileVisitor = new SimpleFileVisitor<Path>() {
 			@Override
 			public FileVisitResult preVisitDirectory(Path dir,
 					BasicFileAttributes attrs) {
-				// System.out.println(String.format("Before visit the '%s' directory",
-				// dir));
 				return FileVisitResult.CONTINUE;
 			}
 
 			@Override
 			public FileVisitResult visitFile(Path file,
 					BasicFileAttributes attribs) {
-//				System.out.println(String.format(
-//						"Visiting file '%s' which has size %d bytes", file,
-//						attribs.size()));
-				List<String> list = map.get(file.toFile().getName());
+				List<String> list = mapFiles.get(file.toFile().getName());
 
 				if (list == null) {
 					list = new ArrayList<>();
-					map.put(file.toFile().getName(), list);
+					mapFiles.put(file.toFile().getName(), list);
 				}
 				list.add(file.toFile().getAbsolutePath());
 				return FileVisitResult.CONTINUE;
@@ -55,14 +54,10 @@ public class DoublonFinder {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		return map;
 	}
 	
-	public static Map<String, List<String>> getDoublons(String absolutePathRoot) {
-		Map<String, List<String>> mapFiles = searchFiles(absolutePathRoot);
-		Map<String, List<String>> mapDoublons = new HashMap<>();
-		
+	public Map<String, List<String>> getDoublons(String absolutePathRoot) {
+		collectFilesName(absolutePathRoot);
 		for(Entry<String, List<String>> entry : mapFiles.entrySet()) {
 			String fileName = entry.getKey();
 			List<String> listDoublons = entry.getValue();
@@ -73,5 +68,14 @@ public class DoublonFinder {
 		}
 		
 		return mapDoublons;
+	}
+
+	public Map<String, List<String>> getMapDoublons() {
+		return this.mapDoublons;
+	}
+
+	public void resetMapDoublons() {
+		this.mapDoublons.clear();
+		this.mapFiles.clear();
 	}
 }
