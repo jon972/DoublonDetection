@@ -11,6 +11,8 @@ import javafx.scene.Scene;
 public class EntryPoint extends Application {
 	@Override
 	public void start(Stage primaryStage) {
+
+        // Hello
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("/main.fxml"));
 			
